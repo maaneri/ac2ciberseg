@@ -1,0 +1,85 @@
+Questão : Teoria de Criptografia 
+Enunciado:
+Explique as principais diferenças entre criptografia simétrica e criptografia assimétrica. Discuta os cenários onde cada tipo de criptografia seria mais adequado, com exemplos práticos.
+Critérios de Avaliação:
+•	Clareza e precisão na explicação.
+•	Exemplos práticos e adequação dos cenários.
+
+
+SEGURANÇA DA INFORMAÇÃO - RESPOSTAS
+
+1. CRIPTOGRAFIA SIMÉTRICA VS ASSIMÉTRICA
+
+Criptografia Simétrica:
+- Usa a mesma chave para criptografar e descriptografar
+- Mais rápida e eficiente em termos de processamento
+- Requer que ambas as partes conheçam a chave secreta
+- Algoritmos: AES, DES, 3DES
+- Melhor para: criptografia de arquivos, streaming, VPNs, bancos de dados
+
+Criptografia Assimétrica:
+- Usa par de chaves: pública e privada
+- Chave pública pode ser compartilhada livremente
+- Chave privada deve ser mantida em segredo
+- Mais lenta que a simétrica
+- Algoritmos: RSA, ECC, DSA
+- Melhor para: troca de chaves, assinaturas digitais, certificados, HTTPS
+
+Comparação:
+- Segurança: Simétrica é mais vulnerável se a chave for comprometida
+- Performance: Simétrica é muito mais rápida
+- Gerenciamento: Assimétrica é mais simples para distribuição de chaves
+
+
+
+Questão 3: Mitigação de Ataques
+Enunciado:
+Liste e explique pelo menos três ataques comuns que podem afetar aplicações web. Para cada ataque, explique como ele pode ser mitigado com as melhores práticas de segurança.
+Critérios de Avaliação:
+•	Identificação correta dos ataques.
+•	Explicação clara e precisa das medidas de mitigação.
+
+
+1. Cross-Site Scripting (XSS):
+- O que é: Injeção de código malicioso (JavaScript) em páginas web
+- Mitigação:
+  * Escape de dados de saída
+  * Implementar Content Security Policy (CSP)
+  * Sanitização de inputs
+  * Headers de segurança apropriados
+
+2. SQL Injection:
+- O que é: Injeção de código SQL malicioso em inputs
+- Mitigação:
+  * Usar ORM ou Prepared Statements
+  * Validação rigorosa de inputs
+  * Implementar whitelist de caracteres
+  * Usar parâmetros preparados
+
+3. Cross-Site Request Forgery (CSRF):
+- O que é: Força o navegador a executar ações não autorizadas
+- Mitigação:
+  * Implementar tokens CSRF
+  * Usar SameSite cookies
+  * Headers de segurança apropriados
+  * Validação de origem das requisições
+
+Boas Práticas de Segurança:
+1. Implementar Rate Limiting
+2. Usar HTTPS
+3. Implementar validação de input rigorosa
+4. Manter todas as dependências atualizadas
+5. Implementar logging de segurança
+6. Usar headers de segurança apropriados
+7. Implementar autenticação forte
+8. Manter backups seguros
+9. Implementar monitoramento de segurança
+10. Realizar testes de segurança regulares
+
+Recomendações para Implementação:
+- Usar bibliotecas de segurança bem mantidas
+- Seguir o princípio do menor privilégio
+- Implementar defesa em camadas
+- Manter documentação de segurança
+- Realizar auditorias regulares
+- Ter um plano de resposta a incidentes 

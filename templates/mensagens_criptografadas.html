@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens Criptografadas - Sistema de Mensagens Seguras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --bg-light: #f8fafc;
+            --bg-dark: #1e293b;
+            --text-light: #64748b;
+            --success-color: #22c55e;
+            --warning-color: #eab308;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        .encrypted-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            overflow: hidden;
+        }
+
+        .encrypted-header {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .encrypted-message {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .encrypted-text {
+            font-family: monospace;
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            word-break: break-all;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+        }
+
+        .message-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        .message-type {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .message-type.sent {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: var(--success-color);
+        }
+
+        .message-type.received {
+            background-color: rgba(234, 179, 8, 0.1);
+            color: var(--warning-color);
+        }
+
+        .btn-back {
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-back:hover {
+            opacity: 0.8;
+            color: white;
+        }
+
+        .refresh-button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .refresh-button:hover {
+            transform: rotate(180deg);
+        }
+
+        .refresh-button i {
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .encrypted-container {
+                margin: 0;
+                border-radius: 0;
+                min-height: 100vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="encrypted-container">
+        <div class="encrypted-header">
+            <a href="{{ url_for('index') }}" class="btn-back">
+                <i class="fas fa-arrow-left"></i>
+                Voltar ao Chat
+            </a>
+            <h1 class="h4 m-0">
+                <i class="fas fa-lock me-2"></i>
+                Mensagens Criptografadas
+            </h1>
+            <button class="refresh-button" onclick="atualizarMensagens()">
+                <i class="fas fa-sync-alt"></i>
+            </button>
+        </div>
+
+        <div class="container-fluid p-4">
+            <div id="mensagens-container">
+                <!-- As mensagens serão inseridas aqui dinamicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function atualizarMensagens() {
+            try {
+                const response = await fetch('/api/mensagens_criptografadas');
+                const mensagens = await response.json();
+                
+                const container = document.getElementById('mensagens-container');
+                container.innerHTML = '';
+                
+                mensagens.forEach(msg => {
+                    const div = document.createElement('div');
+                    div.className = 'encrypted-message';
+                    div.innerHTML = `
+                        <div class="message-info">
+                            <div>
+                                <strong>De:</strong> ${msg.remetente}
+                                <strong class="ms-3">Para:</strong> ${msg.destinatario}
+                            </div>
+                            <span class="message-type ${msg.tipo}">
+                                <i class="fas fa-${msg.tipo === 'enviada' ? 'paper-plane' : 'envelope'}"></i>
+                                ${msg.tipo === 'enviada' ? 'Enviada' : 'Recebida'}
+                            </span>
+                        </div>
+                        <div class="message-info">
+                            <span>
+                                <i class="fas fa-clock me-1"></i>
+                                ${new Date(msg.timestamp).toLocaleString('pt-BR')}
+                            </span>
+                        </div>
+                        <div class="encrypted-text">
+                            ${msg.mensagem_criptografada}
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Erro ao atualizar mensagens:', error);
+            }
+        }
+
+        // Atualiza as mensagens a cada 5 segundos
+        setInterval(atualizarMensagens, 5000);
+
+        // Carrega as mensagens inicialmente
+        document.addEventListener('DOMContentLoaded', atualizarMensagens);
+    </script>
+</body>
+</html> 

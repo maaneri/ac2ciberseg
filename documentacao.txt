@@ -1,0 +1,118 @@
+DOCUMENTAÇÃO DO PROJETO DE MENSAGENS CRIPTOGRAFADAS
+
+1. VISÃO GERAL
+O projeto implementa um sistema de mensagens criptografadas usando Flask e criptografia RSA. O sistema permite que usuários troquem mensagens de forma segura, com criptografia de ponta a ponta.
+
+2. ARQUITETURA DO SISTEMA
+
+2.1 Componentes Principais:
+- Flask (Framework Web)
+- Flask-WTF (Proteção CSRF)
+- Cryptography (Biblioteca de criptografia)
+- Templates HTML
+- Sistema de sessão
+
+2.2 Estrutura de Arquivos:
+/app.py
+  - Arquivo principal da aplicação
+  - Contém todas as rotas e lógica de negócio
+/templates/
+  - Arquivos HTML para interface do usuário
+/static/
+  - Arquivos estáticos (CSS, JS, imagens)
+/requirements.txt
+  - Dependências do projeto
+
+3. ESCOLHAS DE DESIGN
+
+3.1 Criptografia RSA
+- Escolhida por ser um padrão de criptografia assimétrica bem estabelecido
+- Permite criptografia de ponta a ponta
+- Cada usuário possui seu próprio par de chaves
+- Vantagens:
+  * Segurança comprovada
+  * Não requer troca de chaves secretas
+  * Permite verificação de autenticidade
+
+3.2 Armazenamento em Memória
+- Mensagens são armazenadas em memória (lista Python)
+- Escolhido para simplicidade e demonstração
+- Em produção, seria substituído por banco de dados
+- Vantagens para este projeto:
+  * Simplicidade de implementação
+  * Fácil de entender e modificar
+  * Adequado para demonstração
+
+3.3 Sistema de Sessão
+- Usa sessões do Flask para gerenciar usuários
+- Gera IDs únicos para cada usuário
+- Mantém chaves criptográficas por sessão
+- Vantagens:
+  * Não requer autenticação complexa
+  * Fácil de implementar
+  * Adequado para demonstração
+
+4. FLUXO DE DADOS
+
+4.1 Envio de Mensagem:
+1. Usuário acessa a página inicial
+2. Sistema gera par de chaves RSA
+3. Usuário seleciona destinatário
+4. Mensagem é criptografada com chave pública do destinatário
+5. Mensagem criptografada é armazenada
+
+4.2 Recebimento de Mensagem:
+1. Usuário acessa suas mensagens
+2. Sistema identifica mensagens destinadas ao usuário
+3. Mensagens são descriptografadas com chave privada
+4. Mensagens são exibidas para o usuário
+
+5. CONSIDERAÇÕES DE SEGURANÇA
+
+5.1 Implementadas:
+- Proteção CSRF
+- Criptografia de ponta a ponta
+- Geração segura de chaves
+- Validação de inputs
+- Headers de segurança
+
+5.2 Melhorias Possíveis:
+- Implementar banco de dados seguro
+- Adicionar autenticação de usuários
+- Implementar expiração de chaves
+- Adicionar verificação de integridade
+- Implementar backup de chaves
+
+6. LIMITAÇÕES ATUAIS
+
+6.1 Técnicas:
+- Armazenamento em memória (dados são perdidos ao reiniciar)
+- Sem persistência de chaves
+- Sem autenticação de usuários
+- Sem recuperação de chaves perdidas
+
+6.2 Segurança:
+- Chaves são mantidas em memória
+- Sem rotação de chaves
+- Sem verificação de integridade de mensagens
+- Sem proteção contra ataques de timing
+
+7. INSTRUÇÕES DE USO
+
+7.1 Instalação:
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+7.2 Execução:
+```bash
+python app.py
+```
+
+7.3 Acesso:
+- Abrir navegador em http://localhost:5000
+- Cada nova aba/janela representa um usuário diferente
+- Copiar ID do usuário para enviar mensagens
+

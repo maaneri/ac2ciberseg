@@ -1,14 +1,13 @@
-# Sistema de Mensagens Seguras
-
-Este é um sistema de mensagens seguras que utiliza criptografia RSA e proteção CSRF para garantir a segurança das comunicações.
+# Aplicativo Web de Mensagens Criptografadas
+Este é um sistema de troca de mensagens que assegura a privacidade das comunicações por meio de criptografia RSA e proteção contra ataques CSRF.
 
 ## Funcionalidades
 
-- Criptografia assimétrica (RSA) para mensagens
-- Proteção contra ataques CSRF
-- Interface web amigável
-- Sistema de IDs únicos para usuários
-- Atualização automática das mensagens
+- Utilização de criptografia assimétrica (RSA) para proteger mensagens
+- Defesa contra ataques do tipo Cross-Site Request Forgery (CSRF)
+- Interface web simples e intuitiva
+- Atribuição de identificadores únicos para cada usuário
+- Atualização dinâmica da caixa de mensagens
 
 ## Requisitos
 
@@ -35,18 +34,18 @@ python app.py
 http://localhost:5000
 ```
 
-3. Para trocar mensagens:
-   - Cada usuário receberá um ID único ao acessar o sistema
-   - Copie seu ID e compartilhe com quem deseja trocar mensagens
-   - Para enviar uma mensagem, cole o ID do destinatário no campo apropriado
-   - Digite sua mensagem e clique em "Enviar"
+3. Realizar a troca de mensagens:
+   - Ao acessar, o sistema atribui automaticamente um identificador exclusivo ao usuário.
+   - Compartilhe esse ID com quem deseja se comunicar.
+   - Para enviar uma mensagem, insira o ID do destinatário no campo indicado.
+   - Escreva a mensagem e clique em “Enviar”.
 
 ## Segurança
 
-- As mensagens são criptografadas usando RSA com chaves de 2048 bits
-- Cada usuário tem seu próprio par de chaves (pública/privada)
-- As mensagens são criptografadas com a chave pública do destinatário
-- Apenas o destinatário pode descriptografar as mensagens com sua chave privada
-- Proteção CSRF em todas as requisições POST
-- As chaves são mantidas apenas em memória durante a sessão
+- As mensagens são protegidas com criptografia RSA (2048 bits).
+- Cada usuário possui um par exclusivo de chaves (pública e privada).
+- As mensagens são cifradas com a chave pública do destinatário.
+- Apenas o dono da chave privada consegue acessar o conteúdo das mensagens.
+- Todas as requisições POST são protegidas por tokens CSRF.
+- As chaves criptográficas são armazenadas temporariamente na memória durante a sessão do usuário.
 
